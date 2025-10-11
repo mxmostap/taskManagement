@@ -1,4 +1,6 @@
-﻿class Program
+﻿namespace taskManagement;
+
+class Program
 {
     public static void Main(string[] args)
     {

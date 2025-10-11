@@ -5,10 +5,16 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Dapper" Version="2.1.66" />
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.0-preview1.25257.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="service\impl\" />
     </ItemGroup>
 
 </Project>
