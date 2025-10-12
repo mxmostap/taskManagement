@@ -1,4 +1,4 @@
-namespace taskManagement.Entities;
+namespace taskManagement.entity;
 
 public class Tasks
 {

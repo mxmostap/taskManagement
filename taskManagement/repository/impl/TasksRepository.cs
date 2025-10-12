@@ -1,24 +1,29 @@
 using System.Data;
 using Dapper;
-using taskManagement.Entities.Interfaces;
+using taskManagement.entity;
 
-namespace taskManagement.Entities;
+namespace taskManagement.repository.impl;
 
 public class TasksRepository: ITasksRepository
 {
     private readonly IDbConnection _connectionString;
-
+    
     public TasksRepository(IDbConnection connectionString)
     {
         this._connectionString = connectionString;
     }
 
-    public async Task<int> CreateAsync(Tasks tasks)
+    public async Task<Tasks?> GetByIdAsync(int id)
+    {
+        const string sqlQuery = "SELECT * FROM Tasks WHERE Id = @Id";
+        return await _connectionString.QueryFirstOrDefaultAsync<Tasks>(sqlQuery, new {ID = id});
+    }
+    public async Task<int> CreateAsync(Tasks task)
     {
         const string sqlQuery = "INSERT INTO Tasks (Title, Description, IsCompleted, CreatedAt) " +
                                 "VALUES (@Title, @Description, @IsCompleted, NOW());" +
                                 "SELECT CAST(SCOPE_IDENTITY() as int)";
-        return await _connectionString.ExecuteScalarAsync<int>(sqlQuery, tasks);
+        return await _connectionString.ExecuteScalarAsync<int>(sqlQuery, task);
     }
 
     public async Task<IEnumerable<Tasks>> GetTasksAsync()
