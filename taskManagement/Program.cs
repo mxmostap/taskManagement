@@ -14,11 +14,13 @@ namespace taskManagement;
 class Program
 {
     private static ServiceProvider _serviceProvider;
+    
     static async Task Main(string[] args)
     {
         SetupDI();
         await RunApplicationAsync();
     }
+    
     static void SetupDI()
     {
         var configuration = new ConfigurationBuilder()
@@ -32,12 +34,14 @@ class Program
         
         services.AddSingleton<IDatabaseConnectionFactory>(
             new SqlServerConnectionFactory(connectionString));
+        
         services.AddScoped<ITasksRepository, TasksRepository>();
         services.AddScoped<ITasksService, TasksService>();
         services.AddScoped<IConsoleMenu, ConsoleMenu>();
         
         _serviceProvider = services.BuildServiceProvider();
     }
+    
     static async Task RunApplicationAsync()
     {
         using var scope = _serviceProvider.CreateScope();

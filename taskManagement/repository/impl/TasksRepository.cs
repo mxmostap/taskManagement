@@ -7,6 +7,7 @@ namespace taskManagement.repository.impl;
 public class TasksRepository: ITasksRepository
 {
     private readonly IDatabaseConnectionFactory _connectionFactory;
+    
     public TasksRepository(IDatabaseConnectionFactory connectionFactory)
     {
         _connectionFactory = connectionFactory;
@@ -18,6 +19,7 @@ public class TasksRepository: ITasksRepository
         const string sqlQuery = "SELECT * FROM Tasks WHERE Id = @Id";
         return await connection.QueryFirstOrDefaultAsync<Tasks>(sqlQuery, new {ID = id});
     }
+    
     public async Task<int> CreateAsync(Tasks task)
     {
         using var connection = _connectionFactory.GetConnection();

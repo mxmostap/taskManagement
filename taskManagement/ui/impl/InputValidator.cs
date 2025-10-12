@@ -46,6 +46,7 @@ public class InputValidator
             Console.WriteLine("Ошибка ввода - Вы ввели недопустимое значение.\nПовторите ввод: ");
         }
     }
+    
     public int GetTaskId()
     {
         Console.WriteLine("Введите Id задачи: ");

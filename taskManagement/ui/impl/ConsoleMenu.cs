@@ -54,6 +54,7 @@ public class ConsoleMenu: IConsoleMenu
                 break;
         }
     }
+    
     private void ShowMainMenuFunctions()
     {
         Console.WriteLine("Главное меню:");
