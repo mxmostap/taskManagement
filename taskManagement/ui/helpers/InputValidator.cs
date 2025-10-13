@@ -1,55 +1,41 @@
 using Microsoft.IdentityModel.Tokens;
 
-namespace taskManagement.UI.impl;
+namespace taskManagement.ui.helpers;
 
 public class InputValidator
 {
-    public string GetRequiredString(string inputDescription, string ruleMessage)
+    public static string? GetString(string inputDescription, bool isOptional = false)
     {
+        string ruleMessage = "Строка не может быть пустой";
         while (true)
         {
             Console.WriteLine($"Введите {inputDescription}");
             string? input = Console.ReadLine();
             if (!input.IsNullOrEmpty())
                 return input.Trim();
-            else
+            else if (!isOptional)
                 Console.WriteLine(ruleMessage);
+            else
+                return null;
         }
     }
 
-    public string? GetOptionalString(string inputDescription)
-    {
-        Console.WriteLine($"Введите {inputDescription}");
-        string? input = Console.ReadLine();
-        return input.IsNullOrEmpty() ? null : input.Trim();
-    }
-
-    public bool GetTaskStatus()
-    {
-        Console.WriteLine("Выберите статус задачи:");
-        Console.WriteLine("1 - Выполнена\n2 - Не выполнена");
-        var inputStatus = this.GetInt(1, 2);
-        if (inputStatus == 1) return true;
-        else return false;
-    }
-
-    public int GetInt(int minValue, int maxValue)
+    public static int GetNumberBetween(int minValue, int maxValue)
     {
         Console.WriteLine($"Введите число от {minValue} до {maxValue}: ");
         while (true)
         {
             int number;
             string? input = Console.ReadLine();
-            if (int.TryParse(input, out number))
-                if (number >= minValue && number <= maxValue)
+            if (int.TryParse(input, out number) && number >= minValue && number <= maxValue)
                     return number;
             Console.WriteLine("Ошибка ввода - Вы ввели недопустимое значение.\nПовторите ввод: ");
         }
     }
     
-    public int GetTaskId()
+    public static int GetNumber(string message)
     {
-        Console.WriteLine("Введите Id задачи: ");
+        Console.WriteLine(message);
         while (true)
         {
             int number;
@@ -60,17 +46,7 @@ public class InputValidator
         }
     }
 
-    public DateTime GetCreatedAt()
-    {
-        Console.WriteLine("Дата и время создания задачи:");
-        Console.WriteLine("1 - Текущая дата и время\n2 - Ввести в ручную");
-        if (this.GetInt(1, 2) == 1)
-            return DateTime.Now;
-        else
-            return this.GetInputDataTime();
-    }
-
-    private DateTime GetInputDataTime()
+    public static DateTime GetInputDataTime()
     {
         while (true)
         {
@@ -78,9 +54,7 @@ public class InputValidator
             string? input = Console.ReadLine();
         
             if (DateTime.TryParse(input, out DateTime result))
-            {
                 return result;
-            }
             Console.WriteLine("Неверный формат. Попробуйте снова.");
         }
     }

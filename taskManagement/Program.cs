@@ -17,8 +17,17 @@ class Program
     
     static async Task Main(string[] args)
     {
-        SetupDI();
-        await RunApplicationAsync();
+        try
+        {
+            SetupDI();
+            await InitializeDatabaseAsync();
+            await RunApplicationAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
     
     static void SetupDI()
@@ -34,12 +43,30 @@ class Program
         
         services.AddSingleton<IDatabaseConnectionFactory>(
             new SqlServerConnectionFactory(connectionString));
-        
+
+        services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
         services.AddScoped<ITasksRepository, TasksRepository>();
         services.AddScoped<ITasksService, TasksService>();
         services.AddScoped<IConsoleMenu, ConsoleMenu>();
         
         _serviceProvider = services.BuildServiceProvider();
+    }
+    
+    static async Task InitializeDatabaseAsync()
+    {
+        using var scope = _serviceProvider.CreateScope();
+        var databaseInitializer = scope.ServiceProvider.GetRequiredService<IDatabaseInitializer>();
+        
+        Console.WriteLine("Инициализация базы данных запущена.");
+        
+        if (!await databaseInitializer.TestConnectionAsync())
+        {
+            throw new Exception("Ошибка подключения к базе данных, проверьте строку подключения.");
+        }
+        
+        await databaseInitializer.InitializeAsync();
+        Console.WriteLine("База данных инициализирована. Нажмите любую клавишу чтобы продолжить...");
+        Console.ReadKey();
     }
     
     static async Task RunApplicationAsync()
