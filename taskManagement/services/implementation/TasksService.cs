@@ -19,8 +19,9 @@ public class TasksService: ITasksService
 
     public async Task<Tasks> CreateTaskAsync(Tasks task)
     {
-        var id = await _tasksRepository.CreateAsync(task);
-        return await _tasksRepository.GetByIdAsync(id);
+        //var id = 
+        task.Id = await _tasksRepository.CreateAsync(task);
+        return task;
     }
 
     public async Task<IEnumerable<Tasks>> GetTasksAsync()

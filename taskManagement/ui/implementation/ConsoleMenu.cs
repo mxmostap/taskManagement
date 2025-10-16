@@ -57,7 +57,7 @@ public class ConsoleMenu: IConsoleMenu
     {
         var taskId = InputValidator.GetNumber("Введите Id задачи," +
                                               "у которой хотите обновить статус: ");
-        var task = _tasksService.GetTaskAsync(taskId);
+        var task = await _tasksService.GetTaskAsync(taskId);
         if (task == null)
         {
             Console.WriteLine("Задача с таким Id не найдена");
