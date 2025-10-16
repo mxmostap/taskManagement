@@ -1,8 +1,8 @@
 using Dapper;
 using taskManagement.database;
-using taskManagement.entity;
+using taskManagement.entities;
 
-namespace taskManagement.repository.impl;
+namespace taskManagement.repositories.implementation;
 
 public class TasksRepository: ITasksRepository
 {
@@ -36,12 +36,12 @@ public class TasksRepository: ITasksRepository
         return await connection.QueryAsync<Tasks>(sqlQuery);
     }
 
-    public async Task<bool> UpdateStatusAsync(int id, bool status)
+    public async Task<bool> UpdateAsync(Tasks task)
     {
         using var connection = _connectionFactory.GetConnection();
         const string sqlQuery = "UPDATE Tasks SET IsCompleted = @IsCompleted WHERE Id = @Id";
         var updatedRows = await connection.ExecuteAsync(sqlQuery, 
-            new {Id = id, IsCompleted = status});
+            new {Id = task.Id, IsCompleted = task.IsCompleted});
         return updatedRows > 0;
     }
 

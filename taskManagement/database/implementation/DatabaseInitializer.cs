@@ -1,7 +1,7 @@
 using System.Data;
 using Dapper;
 
-namespace taskManagement.database.impl;
+namespace taskManagement.database.implementation;
 
 public class DatabaseInitializer: IDatabaseInitializer
 {

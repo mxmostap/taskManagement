@@ -1,7 +1,7 @@
-using taskManagement.entity;
-using taskManagement.repository;
+using taskManagement.entities;
+using taskManagement.repositories;
 
-namespace taskManagement.service.impl;
+namespace taskManagement.services.implementation;
 
 public class TasksService: ITasksService
 {
@@ -14,12 +14,13 @@ public class TasksService: ITasksService
     
     public async Task<Tasks?> GetTaskAsync(int id)
     {
-        return await _tasksRepository.GetByIdAsync(id);
+        var task = await _tasksRepository.GetByIdAsync(id);
+        if (task == null) throw new Exception("Задачи с таким Id не существует!");
+        else return task;
     }
 
     public async Task<Tasks> CreateTaskAsync(Tasks task)
     {
-        //var id = 
         task.Id = await _tasksRepository.CreateAsync(task);
         return task;
     }
@@ -29,10 +30,9 @@ public class TasksService: ITasksService
         return await _tasksRepository.GetTasksAsync();
     }
 
-    public async Task<Tasks> UpdateTaskStatusAsync(int id, bool status)
+    public async Task<bool> UpdateTaskAsync(Tasks task)
     {
-        await _tasksRepository.UpdateStatusAsync(id, status);
-        return await _tasksRepository.GetByIdAsync(id);
+        return await _tasksRepository.UpdateAsync(task);
     }
 
     public async Task<bool> DeleteTaskAsync(int id)

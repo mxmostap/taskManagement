@@ -1,7 +1,7 @@
 using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace taskManagement.database.impl;
+namespace taskManagement.database.implementation;
 
 public class SqlServerConnectionFactory: IDatabaseConnectionFactory
 {

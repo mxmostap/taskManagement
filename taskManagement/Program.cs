@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using taskManagement.database;
-using taskManagement.database.impl;
-using taskManagement.repository;
-using taskManagement.repository.impl;
-using taskManagement.service;
-using taskManagement.service.impl;
+using taskManagement.database.implementation;
+using taskManagement.repositories;
+using taskManagement.repositories.implementation;
+using taskManagement.services;
+using taskManagement.services.implementation;
 using taskManagement.UI;
-using taskManagement.UI.impl;
+using taskManagement.ui.implementation;
 
 namespace taskManagement;
 

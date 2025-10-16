@@ -1,4 +1,4 @@
-using taskManagement.entity;
+using taskManagement.entities;
 
 namespace taskManagement.ui.helpers;
 

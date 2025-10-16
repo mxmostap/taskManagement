@@ -1,12 +1,12 @@
-using taskManagement.entity;
+using taskManagement.entities;
 
-namespace taskManagement.repository;
+namespace taskManagement.repositories;
 
 public interface ITasksRepository
 {
     Task<Tasks?> GetByIdAsync(int id);
     Task<int> CreateAsync(Tasks task);
     Task<IEnumerable<Tasks>> GetTasksAsync();
-    Task<bool> UpdateStatusAsync(int id, bool status);
+    Task<bool> UpdateAsync(Tasks task);
     Task<bool> DeleteAsync(int id);
 }
