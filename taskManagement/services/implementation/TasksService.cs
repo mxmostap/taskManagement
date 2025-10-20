@@ -32,6 +32,7 @@ public class TasksService: ITasksService
 
     public async Task<bool> UpdateTaskAsync(Tasks task)
     {
+        await GetTaskAsync(task.Id);
         return await _tasksRepository.UpdateAsync(task);
     }
 

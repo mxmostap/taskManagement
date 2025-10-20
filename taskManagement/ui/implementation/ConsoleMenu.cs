@@ -60,17 +60,15 @@ public class ConsoleMenu : IConsoleMenu
         {
             var taskId = InputValidator.GetNumber("Введите Id задачи," +
                                                   "у которой хотите обновить статус: ");
-            var task = await _tasksService.GetTaskAsync(taskId);
-
-            Console.WriteLine($"Текущий статус задачи : " +
-                              $"{(task.IsCompleted ? "выполнена" : "не выполнена")}");
+            Tasks task = new Tasks
+            {
+                Id = taskId,
+                Title = null
+            };            
             task.IsCompleted = InputTaskInfo.GetTaskStatus();
             var result = await _tasksService.UpdateTaskAsync(task);
             if (result)
-            {
-                Console.WriteLine("Обновленная задача:");
-                TaskDisplayer.Display(task);
-            }
+                Console.WriteLine("Статус задачи обновлен.");
             else
                 Console.WriteLine("ОШИБКА: Статус задачи не обновлен!");
         }
